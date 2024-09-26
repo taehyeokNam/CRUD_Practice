@@ -13,12 +13,15 @@ import lombok.NoArgsConstructor;
 public class Schedule extends Timestamped {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
-    String scheduleName;
-    String managerName;
-    String password;
+    private Long id;
+    private String scheduleName;
+    private String managerName;
+    private String password;
 
-    public Schedule(String scheduleName, String managerName, String password) {
+    public Schedule(
+            String scheduleName,
+            String managerName,
+            String password) {
         this.scheduleName = scheduleName;
         this.managerName = managerName;
         this.password = password;

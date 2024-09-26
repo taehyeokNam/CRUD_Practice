@@ -5,7 +5,8 @@ import lombok.Getter;
 import java.time.LocalDateTime;
 
 @Getter
-public class ScheduleAddResponseDto {
+
+public class ScheduleGetResponseDto {
 
     private final long scheduleId;
     private final String scheduleName;
@@ -13,7 +14,7 @@ public class ScheduleAddResponseDto {
     private final LocalDateTime createdAt;
     private final LocalDateTime modifiedAt;
 
-    public ScheduleAddResponseDto(long scheduleId, String scheduleName, String managerName, LocalDateTime createdAt, LocalDateTime modifiedAt) {
+    public ScheduleGetResponseDto(long scheduleId, String scheduleName, String managerName, LocalDateTime createdAt, LocalDateTime modifiedAt) {
         this.scheduleId = scheduleId;
         this.scheduleName = scheduleName;
         this.managerName = managerName;
