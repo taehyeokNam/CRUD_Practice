@@ -1,9 +1,6 @@
 package com.example.crud_practice.controller;
 
-import com.example.crud_practice.dto.ScheduleAddRequestDto;
-import com.example.crud_practice.dto.ScheduleAddResponseDto;
-import com.example.crud_practice.dto.ScheduleGetResponseDto;
-import com.example.crud_practice.dto.ScheduleUpdateRequestDto;
+import com.example.crud_practice.dto.*;
 import com.example.crud_practice.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -36,5 +33,10 @@ public class ScheduleController {
     public ResponseEntity<ScheduleGetResponseDto> updateSchedule(@PathVariable long scheduleid, @RequestBody ScheduleUpdateRequestDto requestDto){
         scheduleService.updateSchedule(scheduleid, requestDto);
         return ResponseEntity.ok(scheduleService.getSchedule(scheduleid));
+    }
+
+    @DeleteMapping("/schedules/{scheduleid}")
+    public void deleteSchedule(@PathVariable long scheduleid, @RequestBody ScheduleDeleteRequestDto requestDto) {
+        scheduleService.deleteSchedule(scheduleid, requestDto);
     }
 }
