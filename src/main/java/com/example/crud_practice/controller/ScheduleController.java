@@ -3,6 +3,7 @@ package com.example.crud_practice.controller;
 import com.example.crud_practice.dto.ScheduleAddRequestDto;
 import com.example.crud_practice.dto.ScheduleAddResponseDto;
 import com.example.crud_practice.dto.ScheduleGetResponseDto;
+import com.example.crud_practice.dto.ScheduleUpdateRequestDto;
 import com.example.crud_practice.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -29,5 +30,11 @@ public class ScheduleController {
     @GetMapping("/schedules")
     public ResponseEntity<List<ScheduleGetResponseDto>> getAllSchedules(@RequestParam String date, @RequestParam String managerName) {
         return ResponseEntity.ok(scheduleService.getAllSchedules(date, managerName));
+    }
+
+    @PatchMapping("/schedules/{scheduleid}")
+    public ResponseEntity<ScheduleGetResponseDto> updateSchedule(@PathVariable long scheduleid, @RequestBody ScheduleUpdateRequestDto requestDto){
+        scheduleService.updateSchedule(scheduleid, requestDto);
+        return ResponseEntity.ok(scheduleService.getSchedule(scheduleid));
     }
 }

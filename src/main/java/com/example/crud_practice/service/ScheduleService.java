@@ -3,6 +3,7 @@ package com.example.crud_practice.service;
 import com.example.crud_practice.dto.ScheduleAddRequestDto;
 import com.example.crud_practice.dto.ScheduleAddResponseDto;
 import com.example.crud_practice.dto.ScheduleGetResponseDto;
+import com.example.crud_practice.dto.ScheduleUpdateRequestDto;
 import com.example.crud_practice.entity.Schedule;
 import com.example.crud_practice.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
@@ -85,5 +86,21 @@ public class ScheduleService {
         }
 
         return dtoList;
+    }
+
+    @Transactional
+    public void updateSchedule(long scheduleid, ScheduleUpdateRequestDto requestDto) {
+
+        Schedule schedule = scheduleRepository.findById(scheduleid).orElseThrow(()-> new NullPointerException("존재하지 않는 일정입니다"));
+
+        if (requestDto.getPassword().isEmpty()){
+            throw new NullPointerException("비밀번호를 입력하세요");
+        }
+
+        if (!requestDto.getPassword().equals(schedule.getPassword())){
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        }
+
+        schedule.updateSchedule(requestDto.getScheduleName(), requestDto.getManagerName());
     }
 }

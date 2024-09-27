@@ -26,4 +26,9 @@ public class Schedule extends Timestamped {
         this.managerName = managerName;
         this.password = password;
     }
+
+    public void updateSchedule(String scheduleName, String managerName){
+        this.scheduleName = scheduleName;
+        this.managerName = managerName;
+    }
 }
