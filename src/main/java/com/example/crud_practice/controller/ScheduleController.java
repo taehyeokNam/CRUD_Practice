@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 public class ScheduleController {
@@ -22,5 +24,10 @@ public class ScheduleController {
     @GetMapping("/schedules/{scheduleid}")
     public ResponseEntity<ScheduleGetResponseDto> getSchedule(@PathVariable long scheduleid) {
         return ResponseEntity.ok(scheduleService.getSchedule(scheduleid));
+    }
+
+    @GetMapping("/schedules")
+    public ResponseEntity<List<ScheduleGetResponseDto>> getAllSchedules(@RequestParam String date, @RequestParam String managerName) {
+        return ResponseEntity.ok(scheduleService.getAllSchedules(date, managerName));
     }
 }

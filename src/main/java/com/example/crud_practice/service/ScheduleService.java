@@ -9,6 +9,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Transactional (readOnly = true)
@@ -47,5 +53,37 @@ public class ScheduleService {
                 schedule.getCreatedAt(),
                 schedule.getModifiedAt()
         );
+    }
+
+    public List<ScheduleGetResponseDto> getAllSchedules(String date, String managerName) {
+
+        List<Schedule> scheduleList = new ArrayList<>();
+        List<ScheduleGetResponseDto> dtoList = new ArrayList<>();
+
+        if (!date.isEmpty()){
+            LocalDateTime startDateTime = LocalDate.parse(date).atStartOfDay();
+            LocalDateTime endDateTime = LocalDate.parse(date).atTime(LocalTime.MAX);
+
+            if (managerName.isEmpty()){
+                scheduleList = scheduleRepository.findAllByModifiedAtBetweenOrderByModifiedAtDesc(startDateTime, endDateTime);
+            }else{
+                scheduleList = scheduleRepository.findAllByManagerNameAndModifiedAtBetweenOrderByModifiedAtDesc(managerName, startDateTime, endDateTime);
+            }
+        }
+        if (date.isEmpty() && !managerName.isEmpty()){
+            scheduleList = scheduleRepository.findByManagerNameOrderByModifiedAtDesc(managerName);
+        }
+
+        for (Schedule schedule : scheduleList){
+            dtoList.add(new ScheduleGetResponseDto(
+                    schedule.getId(),
+                    schedule.getScheduleName(),
+                    schedule.getManagerName(),
+                    schedule.getCreatedAt(),
+                    schedule.getModifiedAt()
+             ));
+        }
+
+        return dtoList;
     }
 }
