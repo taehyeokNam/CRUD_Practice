@@ -3,6 +3,7 @@ package com.example.crud_practice.controller;
 import com.example.crud_practice.dto.*;
 import com.example.crud_practice.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,12 +26,14 @@ public class ScheduleController {
     }
 
     @GetMapping("/schedules")
-    public ResponseEntity<List<ScheduleGetResponseDto>> getAllSchedules(@RequestParam String date, @RequestParam String managerName) {
-        return ResponseEntity.ok(scheduleService.getAllSchedules(date, managerName));
+    public ResponseEntity<Page<ScheduleGetResponseDto>> getAllSchedules(@RequestParam String date, @RequestParam String managerName,
+                                                                        @RequestParam(defaultValue = "1", required = false) int page,
+                                                                        @RequestParam(defaultValue = "10", required = false) int size) {
+        return ResponseEntity.ok(scheduleService.getAllSchedules(date, managerName, page, size));
     }
 
     @PatchMapping("/schedules/{scheduleid}")
-    public ResponseEntity<ScheduleGetResponseDto> updateSchedule(@PathVariable long scheduleid, @RequestBody ScheduleUpdateRequestDto requestDto){
+    public ResponseEntity<ScheduleGetResponseDto> updateSchedule(@PathVariable long scheduleid, @RequestBody ScheduleUpdateRequestDto requestDto) {
         scheduleService.updateSchedule(scheduleid, requestDto);
         return ResponseEntity.ok(scheduleService.getSchedule(scheduleid));
     }

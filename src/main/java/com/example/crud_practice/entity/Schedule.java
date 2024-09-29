@@ -1,9 +1,6 @@
 package com.example.crud_practice.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -15,20 +12,20 @@ public class Schedule extends Timestamped {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String scheduleName;
-    private String managerName;
     private String password;
 
-    public Schedule(
-            String scheduleName,
-            String managerName,
-            String password) {
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private Manager manager;
+
+    public Schedule(String scheduleName, String password, Manager manager) {
         this.scheduleName = scheduleName;
-        this.managerName = managerName;
         this.password = password;
+        this.manager = manager;
     }
 
-    public void updateSchedule(String scheduleName, String managerName){
+    public void updateSchedule(String scheduleName, Manager manager) {
         this.scheduleName = scheduleName;
-        this.managerName = managerName;
+        this.manager = manager;
     }
 }

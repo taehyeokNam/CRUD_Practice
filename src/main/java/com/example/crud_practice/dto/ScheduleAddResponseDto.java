@@ -1,5 +1,6 @@
 package com.example.crud_practice.dto;
 
+import com.example.crud_practice.entity.Schedule;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
@@ -13,11 +14,11 @@ public class ScheduleAddResponseDto {
     private final LocalDateTime createdAt;
     private final LocalDateTime modifiedAt;
 
-    public ScheduleAddResponseDto(long scheduleId, String scheduleName, String managerName, LocalDateTime createdAt, LocalDateTime modifiedAt) {
-        this.scheduleId = scheduleId;
-        this.scheduleName = scheduleName;
-        this.managerName = managerName;
-        this.createdAt = createdAt;
-        this.modifiedAt = modifiedAt;
+    public ScheduleAddResponseDto(Schedule schedule) {
+        this.scheduleId = schedule.getId();
+        this.scheduleName = schedule.getScheduleName();
+        this.managerName = schedule.getManager().getManagerName();
+        this.createdAt = schedule.getCreatedAt();
+        this.modifiedAt = schedule.getModifiedAt();
     }
 }
