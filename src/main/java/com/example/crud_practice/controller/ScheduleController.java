@@ -2,9 +2,11 @@ package com.example.crud_practice.controller;
 
 import com.example.crud_practice.dto.*;
 import com.example.crud_practice.service.ScheduleService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,7 +18,7 @@ public class ScheduleController {
     private final ScheduleService scheduleService;
 
     @PostMapping("/schedules")
-    public ResponseEntity<ScheduleAddResponseDto> addSchedule(@RequestBody ScheduleAddRequestDto requestDto) {
+    public ResponseEntity<ScheduleAddResponseDto> addSchedule(@RequestBody @Valid ScheduleAddRequestDto requestDto) {
         return ResponseEntity.ok(scheduleService.addSchedule(requestDto));
     }
 
@@ -33,7 +35,7 @@ public class ScheduleController {
     }
 
     @PatchMapping("/schedules/{scheduleid}")
-    public ResponseEntity<ScheduleGetResponseDto> updateSchedule(@PathVariable long scheduleid, @RequestBody ScheduleUpdateRequestDto requestDto) {
+    public ResponseEntity<ScheduleGetResponseDto> updateSchedule(@PathVariable long scheduleid, @RequestBody @Valid ScheduleUpdateRequestDto requestDto) {
         scheduleService.updateSchedule(scheduleid, requestDto);
         return ResponseEntity.ok(scheduleService.getSchedule(scheduleid));
     }

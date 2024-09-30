@@ -56,12 +56,12 @@ public class ScheduleService {
             LocalDateTime startDateTime = LocalDate.parse(date).atStartOfDay();
             LocalDateTime endDateTime = LocalDate.parse(date).atTime(LocalTime.MAX);
 
-            Manager manager = managerRepository.findByManagerName(managerName).orElseThrow(()-> new NullPointerException("존재하지 않는 담당자입니다."));;
+            Manager manager = managerRepository.findByManagerName(managerName).orElseThrow(()-> new NullPointerException("존재하지 않는 담당자입니다."));
             schedules = scheduleRepository.findAllByManagerIdAndModifiedAtBetweenOrderByModifiedAtDesc(manager.getId(), startDateTime, endDateTime, pageable);
 
         }
         else if (date.isEmpty() && !managerName.isEmpty()){
-            Manager manager = managerRepository.findByManagerName(managerName).orElseThrow(()-> new NullPointerException("존재하지 않는 담당자입니다."));;
+            Manager manager = managerRepository.findByManagerName(managerName).orElseThrow(()-> new NullPointerException("존재하지 않는 담당자입니다."));
             schedules = scheduleRepository.findAllByManagerIdOrderByModifiedAtDesc(manager.getId(), pageable);
 
         }
